@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+
 
 export default class CreateExcersise extends Component {
 
@@ -23,10 +25,15 @@ export default class CreateExcersise extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      users: ['test user'],
-      username: 'test user'
-    });
+    axios.get('http://localhost:5000/users')
+      .then(response => {
+        if (response.data.length > 0 ){
+          this.setState({
+            users: response.data.map(user => user.username),
+            username: response.data[0].username
+          })
+        }
+      })
   }
 
   onChangeUsername(e) {
@@ -65,6 +72,9 @@ export default class CreateExcersise extends Component {
 
     console.log(excersise);
 
+    axios.post('http://localhost:5000/excersises/add', excersise)
+    .then(res => console.log(res.data));
+
     window.location = '/';
   }
 
@@ -78,7 +88,8 @@ export default class CreateExcersise extends Component {
            <select ref="userInput"
             required
             className="form-control"
-            value={this.onChangeUsername}  // This is throwing a warning in the console. 
+            value={this.state.username}  // This is throwing a warning in the console. 
+            onChange={this.onChangeUsername}
             >
               {
                 this.state.users.map((user) => {
