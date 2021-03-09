@@ -15,8 +15,14 @@ mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
 
 const connection = mongoose.connection;
 connection.once('open', () => {
-  console.log("MongoDB database connection established successfully.")
+  console.log("***MongoDB database connection established successfully.***")
 });
+
+const excersisesRouter = require('./routes/excersises');
+const usersRouter = require('./routes/users');
+
+app.use('/excersises', excersisesRouter);
+app.use('/users', usersRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
