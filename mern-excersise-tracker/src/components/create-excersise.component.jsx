@@ -78,7 +78,8 @@ export default class CreateExcersise extends Component {
            <select ref="userInput"
             required
             className="form-control"
-            value={this.onChangeUsername}>
+            value={this.onChangeUsername}  // This is throwing a warning in the console. 
+            >
               {
                 this.state.users.map((user) => {
                   return <option key={user} value={user}>{user}</option>
