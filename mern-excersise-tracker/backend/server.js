@@ -18,6 +18,10 @@ connection.once('open', () => {
   console.log("***MongoDB database connection established successfully.***")
 });
 
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
 const excersisesRouter = require('./routes/excersises');
 const usersRouter = require('./routes/users');
 
